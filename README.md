@@ -1,2 +1,1 @@
-# NFT_Poll
-Program in Solidity that requires an NFT to participate in the poll
+In this contract, we store the list of candidates in an array, and we use a mapping to store the total number of votes for each candidate. When a user calls the vote function, they must pass the index of the candidate they want to vote for, along with the token ID of their NFT. The contract checks that the NFT exists and belongs to the caller, and that the candidate index is valid, before incrementing the vote count for the selected candidate and triggering the VoteCast event.
