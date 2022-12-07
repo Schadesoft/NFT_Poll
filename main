@@ -1,0 +1,34 @@
+pragma solidity ^0.7.0;
+
+contract Voting {
+    // This mapping stores the total number of votes for each candidate
+    mapping (bytes32 => uint256) public votes;
+
+    // This array stores the list of candidates
+    bytes32[] public candidates;
+
+    // This event is triggered when a vote is cast
+    event VoteCast(bytes32 indexed candidate);
+
+    constructor() public {
+        // Initialize the list of candidates
+        candidates.push("Candidate 1");
+        candidates.push("Candidate 2");
+        candidates.push("Candidate 3");
+    }
+
+    // This function allows a user to cast their vote
+    function vote(uint256 _candidateIndex, bytes32 _tokenId) public {
+        // Check that the NFT exists and belongs to the caller
+        require(ERC721(_tokenId).ownerOf(_tokenId) == msg.sender, "NFT does not exist or does not belong to caller");
+
+        // Check that the candidate index is valid
+        require(_candidateIndex < candidates.length, "Invalid candidate index");
+
+        // Increment the vote count for the selected candidate
+        votes[candidates[_candidateIndex]] += 1;
+
+        // Trigger the VoteCast event
+        emit VoteCast(candidates[_candidateIndex]);
+    }
+}
